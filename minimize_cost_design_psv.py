@@ -2,6 +2,7 @@ import pulp as pl
 from tqdm import tqdm
 import math
 import datetime
+import time
 
 # region : Problem set
 ####################################
@@ -12,6 +13,7 @@ import datetime
 # region : sets (about decision variable index)
 ####################################
 # Hull combination
+start_time = time.time()
 H = {}
 
 length_list = []
@@ -152,14 +154,14 @@ model += c1 # insert to model for express const_left1
 const2 = []
 for key in H.keys():
     const2.append((X[int(key)], DWT[int(key)]))
-c2 = pl.LpAffineExpression(const2) >= min_dwt+1
+c2 = pl.LpAffineExpression(const2)+1 >= min_dwt+1
 model += c2
 
 # constraint 3: Deck Area is bigger than max_deck_area
 const3 = []
 for key in H.keys():
     const3.append((X[int(key)], A[int(key)]))
-c3 = pl.LpAffineExpression(const3) >= min_deck_area+1
+c3 = pl.LpAffineExpression(const3)+1 >= min_deck_area+1
 model += c3
 
 # constraint 4: initial GM is bigger or same with min_initial_gm
@@ -190,7 +192,7 @@ print("model_value is", pl.value(model.objective)) # value(model.objective) = ык
 print("-------------------------------")
 for index in range(len(H)):
     if pl.value(X[index]) != 0:
-        print(f'result : Lenght = {H[str(index)]["length"]}, Breadth = {H[str(index)]["breadth"]}, Draft = {H[str(index)]["draft"]}')
-k=1
+        print(f'result : Length = {H[str(index)]["length"]}, Breadth = {H[str(index)]["breadth"]}, Draft = {H[str(index)]["draft"]}')
+print(time.time()-start_time)
 ####################################
 # endregion
