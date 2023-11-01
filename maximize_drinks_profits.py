@@ -4,78 +4,91 @@ import math
 
 # region : Problem set
 ####################################
-# 2가지 종류의 주스를 생산할 때 순수익을 최대화하는 문제
+# 2가지 종류의 Juice를 생산할 때 순수익을 최대화하는 문제
 ####################################
 # endregion
 
 # region : sets (about decision variable index)
 ####################################
-# index 0 is Apple-Mango Juice, index 1 is Orange-Berry Juice 
+# Juice type indexed by i
 I = [0, 1]
 ####################################
 # endregion
 
 # region : parameters (about data that was inserted)
 ####################################
-# Net profits of AM and OB
+# Profit of Juice type i
 P = [7, 9]
-# Stocks of Apples, Mangos, Oranges, Berries
-S = [(100, 50), (90, 80)]
-# Maximum capacity of production
-M_C = 60
-# Material number of each juice
-M = [(2, 1), (3, 2)]
+# Stock number of Apples
+S_A = 100
+# Stock number of Mangos
+S_M = 50
+# Stock number of Oranges
+S_O = 90
+# Stock number of Berries
+S_B = 80
+# Maximum number of total bottles
+M_B = 60
+# Number of apples for making Apple-Mango Juice
+N_A = 2
+# Number of mangos for making Apple-Mango Juice
+N_M = 1
+# Number of Oranges for making Orange-Berry Juice
+N_O = 3
+# Number of Berries for making Orange-Berry Juice
+N_B = 2 
 ####################################
 # endregion
 
 # region : decision variables (about answer we have to know for solving linear problem)
 ####################################
-# index 0 = number of production chairs / index 1 = number of production tables
+# 0 : number of Apple-Mango Juice / 1 : number of Orange-Berry Juice
 X = []
 for i in I:
-    X.append(pl.LpVariable('x_' + str(i), lowBound = 0, cat = pl.LpContinuous)) 
+    X.append(pl.LpVariable('x_' + str(i), lowBound= 0, cat = pl.LpContinuous)) 
 ####################################
 # endregion
 
 # region : model (about Purpose in problem)
 ####################################
-model = pl.LpProblem('Maximize_net_profits', pl.LpMaximize)
+model = pl.LpProblem('Maximize_profit', pl.LpMaximize)
 ####################################
 # endregion
 
 # region : objective function (about function to solve this problem)
 ####################################
-objective_function = 0
+temp = []
 for i in I:
-    objective_function += X[i] * P[i]
+    temp.append((X[i], P[i]))
+objective_function = pl.LpAffineExpression(temp)
 model += objective_function
 ####################################
 # endregion
 
 # region : constraints (about condition of decision variable)
 ####################################
-# 1). Apple-Mango juice and Orange-Berry juice must be made until number of M_C 
+# 1). constraint : total number of bottles is smaller than M_B
 temp = []
 for i in I:
     temp.append((X[i], 1))
-const1_left = pl.LpAffineExpression(temp)
-model += const1_left <= M_C
+const1 = pl.LpAffineExpression(temp)
+model += const1 <= M_B
 
-# 2). material number of apples is smaller than stocks of apples
-const2_left = M[0][0]*X[0]
-model += const2_left <= S[0][0]
+# 2). constraint : total number of apples for making Apple-Mango Juice is smaller than S_A
+const2 = N_A*X[0]
+model += const2 <= S_A
 
-# 3). material number of mangos is smaller than stocks of mangos
-const3_left = M[0][1]*X[0]
-model += const3_left <= S[0][1]
+# 3). constraint : total number of mangos for making Apple-Mango Juice is smaller than S_M
+const3 = N_M*X[0]
+model += const3 <= S_M
 
-# 4). material number of oranges is smaller than stocks of oranges
-const4_left = M[1][0]*X[1]
-model += const4_left <= S[1][0]
+# 4). constraint : total number of oranges for making Orange-Berry Juice is smaller than S_O
+const4 = N_O*X[1]
+model += const4 <= S_O
 
-# 5). material number of berries is smaller than stocks of berries
-const5_left = M[1][1]*X[1]
-model += const5_left <= S[1][1]
+# 5). constraint : total number of berries for making Orange-Berry Juice is smaller than S_B
+const5 = N_B*X[1]
+model += const5 <= S_B
 ####################################
 # endregion
 

@@ -28,7 +28,7 @@ C = [50, 0]
 # Base cargo capacity
 B_C = 40000
 # Base fuel consumptiojn efficiency
-B_F = 1400
+B_E = 1400
 # Maximum draft
 M_D = 13
 # Maximum voyage number
@@ -67,7 +67,7 @@ objective_2 = []
 for index in I:
     objective_1.append((X[i], P*C[i]))
     objective_2.append((X[i], O*E[i]))
-objective_function = P*B_C + pl.LpAffineExpression(objective_1) - O*A*B_F - pl.LpAffineExpression(objective_2)
+objective_function = P*B_C + pl.LpAffineExpression(objective_1) - O*A*B_E - pl.LpAffineExpression(objective_2)
 model += objective_function 
 ####################################
 # endregion
@@ -103,9 +103,10 @@ solver = pl.CPLEX_CMD()
 result = model.solve(solver)
 
 print('Result : ', result) # 1 is ok in Cplex
+print('Objective function : ', objective_function)
 
 # print the solution
-print("model_value :", pl.value(model.objective)) # value(model.objective) = 모델의 목적함수의 값 도출
+print("Model_value :", pl.value(model.objective)) # value(model.objective) = 모델의 목적함수의 값 도출
 print("-------------------------------")
 for i in I:
     print(f"X [{i}] : {pl.value(X[i])}")

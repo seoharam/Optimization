@@ -11,7 +11,7 @@ T = [0, 1, 2, 3, 4] # T = Task
 A = [[1, 1, 1, 1, 0], [1, 1, 0, 1, 1], [0, 1, 1, 1, 1]] # A = Allowance
 L = [8, 5, 7, 8, 4] # L = Workload of tasks
 N_max = [2, 2, 2] # N_max = Maximum number of assignment
-G = 10.7 # G = Goal value
+G =  sum(L)/len(L)# G = Goal value
 
 # decision variable # ===================================================================================================
 
