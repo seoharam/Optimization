@@ -1,0 +1,18 @@
+
+Log started (V22.1.1.0) Fri Dec  8 10:07:10 2023
+
+
+Problem 'C:\Users\SEOHARAM\AppData\Local\Temp\6de55c58a3f74c7691d627e5b7b1fdf1-pulp.lp' read.
+Read time = 0.00 sec. (0.00 ticks)
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 1 columns.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+
+Dual simplex - Optimal:  Objective =  0.0000000000e+00
+Solution time =    0.00 sec.  Iterations = 0 (0)
+Deterministic time = 0.00 ticks  (0.19 ticks/sec)
+
+
+Solution written to file 'C:\Users\SEOHARAM\AppData\Local\Temp\6de55c58a3f74c7691d627e5b7b1fdf1-pulp.sol'.

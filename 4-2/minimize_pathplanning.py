@@ -17,11 +17,11 @@ T = []
 # Arcs indexed by (i,j)
 A = []
 # Pull-out arcs indexed by (i,j)
-A_PO = []
+A_PO = set([])
 # Pull-in arcs indexed by (i,j)
-A_PI = []
+A_PI = set([])
 # Deadhead arcs indexd by (i,j)
-A_DH = []
+A_DH = set([])
 ####################################
 # endregion
 
@@ -72,8 +72,8 @@ for i,j in A_PI:
 # 3). constraint : Without source node and sink node, Each node has an equal number of comming and outting edges
 temp = []
 temp2 = []
-for i1,j1 in set(A_DH | A_PO):
-    for i2,j2 in set(A_DH | A_PI):
+for i1,j1 in A_DH | A_PO:
+    for i2,j2 in A_DH | A_PI:
         # if j1 is same with j2, add to 
         if j1 == j2:
             temp.append((X[i1][j1],1))
